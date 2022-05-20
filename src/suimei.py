@@ -1,3 +1,4 @@
+from meishiki import build_meishiki
 
 
 
