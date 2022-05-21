@@ -236,7 +236,24 @@ def append_hogo(chishi):
             return kd.hogo[i]
     return []
     
-        
+
+def append_hitsuchu(chishi):
+    
+    # ＜機能＞
+    # 七冲を命式に追加する
+    # ＜入力＞
+    #   - 地支
+    # ＜出力＞
+    #   - 七冲のリスト
+    
+    hitsuchu = []
+    for i, s in enumerate(chishi):
+        for j in list(range(i, len(chishi))):
+            if kd.hitsuchu[s] == chishi[j] and i != j:
+                hitsuchu.append([[s, i], [kd.hitsuchu[s], j]])
+    return hitsuchu
+
+
 def build_meishiki(birthday, sex):
 
     # 天干・地支を得る
@@ -289,7 +306,8 @@ def build_meishiki(birthday, sex):
     # 方合を得る
     hogo = append_hogo(chishi)
     
-    
+    # 七冲を得る
+    hitsuchu = append_hitsuchu(chishi)
     
     
     
