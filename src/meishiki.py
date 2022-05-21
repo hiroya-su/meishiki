@@ -184,6 +184,11 @@ def find_zokan(birthday, shi):
     except:
         print('蔵干の計算で例外が送出されました。')
         exit()
+
+
+def append_tsuhen(tenkan_zokan):
+    
+    tsuhen = [kd.kan_tsuhen[tenkan_zokan[2]].index(i) for i in tenkan_zokan]
     
             
 def build_meishiki(birthday, sex):
@@ -208,6 +213,12 @@ def build_meishiki(birthday, sex):
     getchu = [m_kan, m_shi, m_zkan]
     nitchu = [d_kan, d_shi, d_zkan]
     jichu  = [t_kan, t_shi, t_zkan]
+
+    # 通変を得る
+    tsuhen = [kd.kan_tsuhen[tenkan[2]].index(i) for i in tenkan + zokan]
+    
+    # 十二運を得る
+    twelve_fortune = [kd.twelve_table[tenkan[2]][i] for i in chishi]
     
     
     
