@@ -184,13 +184,44 @@ def find_zokan(birthday, shi):
     except:
         print('蔵干の計算で例外が送出されました。')
         exit()
+    
+
+def append_kango(tenkan_zokan):
+
+    # ＜機能＞
+    # 干合を命式に追加する
+    # ＜入力＞
+    #   - 天干＋蔵干
+    # ＜出力＞
+    #   - 干合のリスト
+    #     [[干合する干１, 干１の場所（0〜7）], [干合する干２, 干２の場所], 変化する五行]
+    
+    kango = []
+    for i, tz1 in enumerate(tenkan_zokan):
+        for j in list(range(i, len(tenkan_zokan))):
+            if kd.kango[tz1] == tenkan_zokan[j] and i != j:
+                kango.append([[tz1, i], [tenkan_zokan[j], j], kd.kango_henka[tz1]])
+    return kango
 
 
-def append_tsuhen(tenkan_zokan):
+def append_shigo(chishi):
+
+    # ＜機能＞
+    # 支合を命式に追加する
+    # ＜入力＞
+    #   なし
+    # ＜出力＞
+    #   - 支合のリスト
+    #     [[支合する支１, 支１の場所（0〜3）], [支合する支２, 支２の場所]]
     
-    tsuhen = [kd.kan_tsuhen[tenkan_zokan[2]].index(i) for i in tenkan_zokan]
+    shigo = []
+    for i, s in enumerate(chishi):
+        for j in list(range(i, len(chishi))):
+            if kd.shigo[s] == chishi[j] and i != j:
+                shigo.append([[s, i], [kd.shigo[s], j]])
+    return shigo
     
-            
+        
 def build_meishiki(birthday, sex):
 
     # 天干・地支を得る
@@ -213,12 +244,30 @@ def build_meishiki(birthday, sex):
     getchu = [m_kan, m_shi, m_zkan]
     nitchu = [d_kan, d_shi, d_zkan]
     jichu  = [t_kan, t_shi, t_zkan]
-
+    
+    # 五行（木火土金水）のそれぞれの数を得る
+    gogyo = [0] * 5
+    for k in tenkan:
+        gogyo[kd.gogyo_kan[k]] += 1
+    for s in chishi:
+        gogyo[kd.gogyo_shi[s]] += 1
+    
+    # 陰陽のそれぞれの数を得る
+    inyo = [0] * 2
+    for k in tenkan:
+        inyo[k % 2] += 1
+    for s in chishi:
+        inyo[s % 2] += 1
+    
     # 通変を得る
     tsuhen = [kd.kan_tsuhen[tenkan[2]].index(i) for i in tenkan + zokan]
     
     # 十二運を得る
     twelve_fortune = [kd.twelve_table[tenkan[2]][i] for i in chishi]
     
-    
+    # 干合を得る
+    kango = append_kango(tenkan + zokan)
+
+    # 支合を得る
+    shigo = append_shigo(chishi)
     
