@@ -209,7 +209,7 @@ def append_shigo(chishi):
     # ＜機能＞
     # 支合を命式に追加する
     # ＜入力＞
-    #   なし
+    #   - 地支
     # ＜出力＞
     #   - 支合のリスト
     #     [[支合する支１, 支１の場所（0〜3）], [支合する支２, 支２の場所]]
@@ -220,6 +220,21 @@ def append_shigo(chishi):
             if kd.shigo[s] == chishi[j] and i != j:
                 shigo.append([[s, i], [kd.shigo[s], j]])
     return shigo
+
+
+def append_hogo(chishi):
+
+    # ＜機能＞
+    # 方合を命式に追加する
+    # ＜入力＞
+    #   - 地支
+    # ＜出力＞
+    #   - 方合のリスト
+    
+    for i, h in enumerate(kd.hogo):
+        if (h[0][0] in chishi) and (h[0][1] in chishi) and (h[0][2] in chishi):
+            return kd.hogo[i]
+    return []
     
         
 def build_meishiki(birthday, sex):
@@ -270,4 +285,11 @@ def build_meishiki(birthday, sex):
 
     # 支合を得る
     shigo = append_shigo(chishi)
+
+    # 方合を得る
+    hogo = append_hogo(chishi)
+    
+    
+    
+    
     
