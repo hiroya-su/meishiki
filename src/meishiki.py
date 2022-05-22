@@ -237,6 +237,37 @@ def append_hogo(chishi):
     return []
     
 
+def append_sango(chishi):
+    
+    # ＜機能＞
+    # 三合を命式に追加する
+    # ＜入力＞
+    #   - 地支
+    # ＜出力＞
+    #   - 三合のリスト
+    
+    for i, s in enumerate(kd.sango):
+        if (s[0][0] in chishi) and (s[0][1] in chishi) and (s[0][2] in chishi):
+            return kd.sango[i]
+    return []
+
+
+def append_hankai(chishi):
+    
+    # ＜機能＞
+    # 半会を命式に追加する
+    # ＜入力＞
+    #   - 地支
+    # ＜出力＞
+    #   - 半会のリスト
+
+    hankai = []
+    for h in kd.hankai:
+        if (h[0][0] in chishi) and (h[0][1] in chishi):
+            hankai.append(h)
+    return hankai
+    
+    
 def append_hitsuchu(chishi):
     
     # ＜機能＞
@@ -305,6 +336,8 @@ def build_meishiki(birthday, sex):
 
     # 方合を得る
     hogo = append_hogo(chishi)
+    
+    
     
     # 七冲を得る
     hitsuchu = append_hitsuchu(chishi)
