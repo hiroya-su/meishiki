@@ -285,6 +285,67 @@ def append_hitsuchu(chishi):
     return hitsuchu
 
 
+def append_kei(chishi):
+    
+    # ＜機能＞
+    # 刑を命式に追加する
+    # ＜入力＞
+    #   - 地支
+    # ＜出力＞
+    #   - 刑のリスト
+    
+    kei = []
+    for i, s in enumerate(chishi):
+        for j in list(range(0, len(chishi))):
+            if kd.kei[s] == chishi[j] and i != j:
+                kei.append([[s, i], [kd.kei[s], j]])
+    return kei
+
+
+def append_gai(chishi):
+    
+    # ＜機能＞
+    # 害を命式に追加する
+    # ＜入力＞
+    #   - 地支
+    # ＜出力＞
+    #   - 害のリスト
+        
+    gai = []
+    for i, s in enumerate(chishi):
+        for j in list(range(i, len(chishi))):
+            if kd.gai[s] == chishi[j] and i != j:
+                gai.append([[s, i], [kd.gai[s], j]])
+    return gai
+
+
+def append_kubo(birthday, chishi):
+    
+    # ＜機能＞
+    # 空亡を命式に追加する
+    # ＜入力＞
+    #   - birthday（datetime）：誕生日
+    #   - chishi（list）：地支
+    # ＜出力＞
+    #   - kubo（list）：空亡となる地支の番号と位置
+    
+    d = birthday.day + kd.kisu_table[birthday.year - 1926][birthday.month - 1] - 1
+    if d >= 60:
+        d -= 60  # d が 60 を超えたら 60 を引く
+        
+    try:
+        kubo = kd.kubo[d // 10]
+    except:
+        print('空亡が計算できませんでした。')
+        exit()
+    
+    k = []
+    for i, c in enumerate(chishi):
+        if c in kubo:
+            k.append([c, i])
+    return k
+
+
 def build_meishiki(birthday, sex):
 
     # 天干・地支を得る
@@ -337,10 +398,14 @@ def build_meishiki(birthday, sex):
     # 方合を得る
     hogo = append_hogo(chishi)
     
+    # 三合を得る
+    sango = append_sango(chishi)
     
+    # 半会を得る
+    hankai = append_hankai(chishi)
     
     # 七冲を得る
     hitsuchu = append_hitsuchu(chishi)
     
-    
-    
+    # 空亡を得る
+    kubo = append_kubo(birthday, chishi)
