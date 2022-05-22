@@ -8,4 +8,5 @@ if __name__ == '__main__':
     birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
     sex = 0
 
-    build_meishiki(birthday, sex)
+    # 命式を組成する
+    meishiki = build_meishiki(birthday, sex)

@@ -1,5 +1,5 @@
 import kanshi_data as kd
-from dataclasses import dataclass
+from dataclasses import field, dataclass
 from datetime import datetime
 from datetime import timedelta
 
@@ -10,12 +10,38 @@ class Meishiki:
     birthday: datetime
     sex: int
 
+    tenkan : list[int] = field(default_factory = list)
+    chishi : list[int] = field(default_factory = list)
+    zokan : list[int] = field(default_factory = list)
+
+    nenchu : list[int] = field(default_factory = list)
+    getchu : list[int] = field(default_factory = list)
+    nitchu : list[int] = field(default_factory = list)
+    jichu : list[int] = field(default_factory = list)
+    
+    gogyo : list[int] = field(default_factory = list)
+    inyo : list[int] = field(default_factory = list)
+
+    tsuhen : list[int] = field(default_factory = list)
+    twelve_fortune : list[int] = field(default_factory = list)
+
+    kango : list[int] = field(default_factory = list)
+    shigo : list[int] = field(default_factory = list)
+    hogo : list[int] = field(default_factory = list)
+    sango : list[int] = field(default_factory = list)
+    hankai : list[int] = field(default_factory = list)
+    hitsuchu : list[int] = field(default_factory = list)
+    kei : list[int] = field(default_factory = list)
+    gai : list[int] = field(default_factory = list)
+    kubo : list[int] = field(default_factory = list)
+
 
 def is_setsuiri(birthday, month):
     
     # ＜機能＞
     # birthday の年月日が、month で与えられた月に対して節入りしているか否かを判定する
     # ＜入力＞
+    #   - birthday（datetime）：誕生日
     #   - month（int）：基準となる月
     # ＜出力＞
     #   - 節入りしている（0）またはしていない（-1）の二値
@@ -184,6 +210,25 @@ def find_zokan(birthday, shi):
     except:
         print('蔵干の計算で例外が送出されました。')
         exit()
+
+
+def append_gogyo(tenkan, chishi):
+
+    gogyo = [0] * 5
+    for k in tenkan:
+        gogyo[kd.gogyo_kan[k]] += 1
+    for s in chishi:
+        gogyo[kd.gogyo_shi[s]] += 1
+    return gogyo
+
+
+def append_inyo(tenkan, chishi):
+
+    inyo = [0] * 2
+    for k in tenkan:
+        inyo[k % 2] += 1
+    for s in chishi:
+        inyo[s % 2] += 1
     
 
 def append_kango(tenkan_zokan):
@@ -370,18 +415,10 @@ def build_meishiki(birthday, sex):
     jichu  = [t_kan, t_shi, t_zkan]
     
     # 五行（木火土金水）のそれぞれの数を得る
-    gogyo = [0] * 5
-    for k in tenkan:
-        gogyo[kd.gogyo_kan[k]] += 1
-    for s in chishi:
-        gogyo[kd.gogyo_shi[s]] += 1
+    gogyo = append_gogyo(tenkan, chishi)
     
     # 陰陽のそれぞれの数を得る
-    inyo = [0] * 2
-    for k in tenkan:
-        inyo[k % 2] += 1
-    for s in chishi:
-        inyo[s % 2] += 1
+    inyo = append_inyo(tenkan, chishi)
     
     # 通変を得る
     tsuhen = [kd.kan_tsuhen[tenkan[2]].index(i) for i in tenkan + zokan]
@@ -389,23 +426,29 @@ def build_meishiki(birthday, sex):
     # 十二運を得る
     twelve_fortune = [kd.twelve_table[tenkan[2]][i] for i in chishi]
     
-    # 干合を得る
+    # 干合・支合を得る
     kango = append_kango(tenkan + zokan)
-
-    # 支合を得る
     shigo = append_shigo(chishi)
 
-    # 方合を得る
+    # 方合・三合・半会を得る
     hogo = append_hogo(chishi)
-    
-    # 三合を得る
     sango = append_sango(chishi)
-    
-    # 半会を得る
     hankai = append_hankai(chishi)
     
-    # 七冲を得る
+    # 七冲・刑・害を得る
     hitsuchu = append_hitsuchu(chishi)
+    kei = append_kei(chishi)
+    gai = append_gai(chishi)
     
     # 空亡を得る
     kubo = append_kubo(birthday, chishi)
+    
+    # 命式を組成する
+    meishiki = Meishiki(birthday, sex,
+                        tenkan, chishi, zokan,
+                        nenchu, getchu, nitchu, jichu,
+                        gogyo, inyo,
+                        tsuhen, twelve_fortune,
+                        kango, shigo, hogo, sango, hankai, hitsuchu, kei, gai, kubo)
+    return meishiki
+    
