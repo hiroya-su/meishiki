@@ -36,6 +36,9 @@ class Meishiki:
     gai: list[int] = field(default_factory = list)
     kubo: list[int] = field(default_factory = list)
 
+    youjin: int = 0
+    kaigou: int = 0
+
 
 def is_setsuiri(birthday, month):
     
@@ -407,6 +410,32 @@ def append_kubo(birthday, chishi):
     return k
 
 
+def append_youjin(d_kan, d_shi):
+
+    if d_kan == 2 and d_shi == 6:    # 丙午
+        return 1
+    elif d_kan == 4 and d_shi == 6:  # 戊午
+        return 1
+    elif d_kan == 8 and d_shi == 0:  # 壬子
+        return 1
+    else:
+        return 0
+
+def append_kaigou(d_kan, d_shi):
+
+    if d_kan == 4 and d_shi == 10:   # 戊戌
+        return 1
+    elif d_kan == 6 and d_shi == 10: # 庚戌
+        return 1
+    elif d_kan == 6 and d_shi == 4:  # 庚辰
+        return 1
+    elif d_kan == 8 and d_shi == 4:  # 壬辰
+        return 1
+    else:
+        return 0
+    
+    
+
 def build_meishiki(birthday, sex):
 
     # 天干・地支を得る
@@ -461,6 +490,10 @@ def build_meishiki(birthday, sex):
     
     # 空亡を得る
     kubo = append_kubo(birthday, chishi)
+
+    # 陽刃・魁罡を得る
+    youjin = append_youjin(d_kan, d_shi)
+    kaigou = append_kaigou(d_kan, d_shi)
     
     # 命式を組成する
     meishiki = Meishiki(birthday, sex,
@@ -468,6 +501,8 @@ def build_meishiki(birthday, sex):
                         nenchu, getchu, nitchu, jichu,
                         gogyo, inyo, getsurei,
                         tsuhen, twelve_fortune,
-                        kango, shigo, hogo, sango, hankai, hitsuchu, kei, gai, kubo)
+                        kango, shigo, hogo, sango, hankai,
+                        hitsuchu, kei, gai, kubo,
+                        youjin, kaigou)
     return meishiki
     
