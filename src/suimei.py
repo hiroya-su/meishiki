@@ -10,3 +10,4 @@ if __name__ == '__main__':
 
     # 命式を組成する
     meishiki = build_meishiki(birthday, sex)
+    print(meishiki)

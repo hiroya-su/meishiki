@@ -10,30 +10,31 @@ class Meishiki:
     birthday: datetime
     sex: int
 
-    tenkan : list[int] = field(default_factory = list)
-    chishi : list[int] = field(default_factory = list)
-    zokan : list[int] = field(default_factory = list)
+    tenkan: list[int] = field(default_factory = list)
+    chishi: list[int] = field(default_factory = list)
+    zokan: list[int] = field(default_factory = list)
 
-    nenchu : list[int] = field(default_factory = list)
-    getchu : list[int] = field(default_factory = list)
-    nitchu : list[int] = field(default_factory = list)
-    jichu : list[int] = field(default_factory = list)
+    nenchu: list[int] = field(default_factory = list)
+    getchu: list[int] = field(default_factory = list)
+    nitchu: list[int] = field(default_factory = list)
+    jichu: list[int] = field(default_factory = list)
     
-    gogyo : list[int] = field(default_factory = list)
-    inyo : list[int] = field(default_factory = list)
+    gogyo: list[int] = field(default_factory = list)
+    inyo: list[int] = field(default_factory = list)
+    getsurei: int = 0
 
-    tsuhen : list[int] = field(default_factory = list)
-    twelve_fortune : list[int] = field(default_factory = list)
+    tsuhen: list[int] = field(default_factory = list)
+    twelve_fortune: list[int] = field(default_factory = list)
 
-    kango : list[int] = field(default_factory = list)
-    shigo : list[int] = field(default_factory = list)
-    hogo : list[int] = field(default_factory = list)
-    sango : list[int] = field(default_factory = list)
-    hankai : list[int] = field(default_factory = list)
-    hitsuchu : list[int] = field(default_factory = list)
-    kei : list[int] = field(default_factory = list)
-    gai : list[int] = field(default_factory = list)
-    kubo : list[int] = field(default_factory = list)
+    kango: list[int] = field(default_factory = list)
+    shigo: list[int] = field(default_factory = list)
+    hogo: list[int] = field(default_factory = list)
+    sango: list[int] = field(default_factory = list)
+    hankai: list[int] = field(default_factory = list)
+    hitsuchu: list[int] = field(default_factory = list)
+    kei: list[int] = field(default_factory = list)
+    gai: list[int] = field(default_factory = list)
+    kubo: list[int] = field(default_factory = list)
 
 
 def is_setsuiri(birthday, month):
@@ -114,8 +115,13 @@ def find_day_kanshi(birthday):
     #   - d_shi（int）：日支の番号
     # ＜異常検出＞
     # 取得できなかった場合はエラーメッセージを出力して強制終了する
+
+    try:
+        d = birthday.day + kd.kisu_table[birthday.year - 1926][birthday.month - 1] - 1
+    except:
+        print('生年は1926年以降でなければなりません。')
+        exit()
     
-    d = birthday.day + kd.kisu_table[birthday.year - 1926][birthday.month - 1] - 1
     if d >= 60:
         d -= 60  # d が 60 を超えたら 60 を引く
         
@@ -229,8 +235,18 @@ def append_inyo(tenkan, chishi):
         inyo[k % 2] += 1
     for s in chishi:
         inyo[s % 2] += 1
+    return inyo
     
 
+def append_getsurei(d_kan, m_shi):
+
+    if m_shi in kd.getsurei_ou[d_kan]:
+        return 1
+    if m_shi in kd.getsurei_sou[d_kan]:
+        return 2
+    return 0
+
+        
 def append_kango(tenkan_zokan):
 
     # ＜機能＞
@@ -419,6 +435,9 @@ def build_meishiki(birthday, sex):
     
     # 陰陽のそれぞれの数を得る
     inyo = append_inyo(tenkan, chishi)
+
+    # 月令を得る
+    getsurei = append_getsurei(d_kan, m_shi)
     
     # 通変を得る
     tsuhen = [kd.kan_tsuhen[tenkan[2]].index(i) for i in tenkan + zokan]
@@ -447,7 +466,7 @@ def build_meishiki(birthday, sex):
     meishiki = Meishiki(birthday, sex,
                         tenkan, chishi, zokan,
                         nenchu, getchu, nitchu, jichu,
-                        gogyo, inyo,
+                        gogyo, inyo, getsurei,
                         tsuhen, twelve_fortune,
                         kango, shigo, hogo, sango, hankai, hitsuchu, kei, gai, kubo)
     return meishiki
