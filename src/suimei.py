@@ -1,5 +1,5 @@
 from meishiki import build_meishiki
-from unsei import append_daiun
+from unsei import build_unsei
 from datetime import datetime as dt
 
 if __name__ == '__main__':
@@ -13,6 +13,9 @@ if __name__ == '__main__':
 
     # 命式を組成する
     meishiki = build_meishiki(birthday, sex)
-    
-    append_daiun(meishiki)
+
+    # 運勢を組成する
+    unsei = build_unsei(meishiki)
+
+    breakpoint()
     

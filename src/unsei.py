@@ -7,6 +7,7 @@ from datetime import datetime
 class Unsei:
 
     daiun: list[int] = field(default_factory = list)
+    nenun: list[int] = field(default_factory = list)
     
 
 
@@ -85,11 +86,6 @@ def append_daiun(meishiki):
     
     # ＜機能＞
     # 大運を命式に追加する
-    # ＜入力＞
-    #   - self.birthday（datetime）：生年月日
-    #   - self.sex（int）：性別の番号
-    # ＜出力＞
-    #   - daiun（list）：大運のリスト
 
     daiun = []
     year_ratio_list = convert_year_ratio(meishiki.birthday)
@@ -112,4 +108,36 @@ def append_daiun(meishiki):
         ry += 10
         idx += p
 
+    return daiun
+
     
+def append_nenun(meishiki):
+    
+    # ＜機能＞
+    # 年運を命式に追加する
+
+    nenun = []
+    idx = (meishiki.birthday.year - 3) % 60 - 1 # + self.meishiki.is_setsuiri(2)
+    
+    for n in list(range(0, 120)):
+        kanshi_ = kd.sixty_kanshi[idx]
+        tsuhen_ = kd.kan_tsuhen[meishiki.nikkan].index(kanshi_[0])
+        nenun.append([n, kanshi_[0], kanshi_[1], tsuhen_])
+        idx += 1
+        if idx >= 60:
+            idx = 0
+
+    return nenun
+
+
+def build_unsei(meishiki):
+
+    # 大運を得る
+    daiun = append_daiun(meishiki)
+
+    # 年運を得る
+    nenun = append_nenun(meishiki)
+
+    unsei = Unsei(daiun, nenun)
+
+    return unsei
