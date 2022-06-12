@@ -1,0 +1,115 @@
+import kanshi_data as kd
+from meishiki import is_setsuiri
+from dataclasses import field, dataclass
+from datetime import datetime
+
+@dataclass(slots = True)
+class Unsei:
+
+    daiun: list[int] = field(default_factory = list)
+    
+
+
+def convert_year_ratio(birthday):
+    
+    # ＜機能＞
+    # 生年月日から前の節入日までの日数と、生年月日から次の節入日までの日数との比を、
+    # 10年に占める割合に直す。
+    # 例：8日：22日→3年：7年
+    # ＜入力＞
+    #   - brithday（datetime）：生年月日
+    # ＜出力＞
+    #   - year_ratio_list（list）：10年に占める割合
+    
+    for i, s in enumerate(kd.setsuiri):
+        p = is_setsuiri(birthday, birthday.month)
+        if (s[0] == birthday.year) and (s[1] == birthday.month):
+            if not p:
+                k = kd.setsuiri[i+1]
+                previous_setsuiri = datetime(year = s[0], month = s[1], day = s[2], hour = s[3], minute = s[4])
+                next_setsuiri = datetime(year = k[0], month = k[1], day = k[2], hour = k[3], minute = k[4])
+            else:
+                k = kd.setsuiri[i-1]
+                previous_setsuiri = datetime(year = k[0], month = k[1], day = k[2], hour = k[3], minute = k[4])
+                next_setsuiri = datetime(year = s[0], month = s[1], day = s[2], hour = s[3], minute = s[4])
+            break
+        
+    diff_previous = birthday - previous_setsuiri   # 生年月日から前の節入日までの日数
+    diff_next = next_setsuiri - birthday           # 生年月日から次の節入日までの日数
+    
+    # ３日間を１年に置き換えるので、３除した値を丸める
+    p_year = round((diff_previous.days + (diff_previous.seconds / 60 / 60 / 24)) / 3)
+    n_year = round((diff_next.days + (diff_next.seconds / 60 / 60 / 24)) / 3)
+    
+    year_ratio_list = [p_year, n_year]
+    
+    return year_ratio_list
+
+
+def is_junun_gyakuun(sex, y_kan):
+    
+    # ＜機能＞
+    # 大運が順運か逆運かを判定する
+    # ＜入力＞
+    #   - y_kan（int）：年柱天干の番号
+    #   - self.sex（int）：性別の番号
+    # ＜出力＞
+    #   - 順運（1）または逆運（0）の二値
+    # ＜異常検出＞
+    # 取得できなかった場合はエラーメッセージを出力して強制終了する
+    
+    if (((y_kan % 2) == 0) and (sex == 0)) or (((y_kan % 2) == 1) and (sex == 1)):
+        return 1   # 年柱天干が陽干の男命 or 年柱天干が陰干の女命は、順運
+        
+    elif (((y_kan % 2) == 1) and (sex == 0)) or (((y_kan % 2) == 0) and (sex == 1)):
+        return 0   # 年柱天干が陽干の女命 or 年柱天干が陰干の男命は、逆運
+    
+    else:
+        print('大運の順逆を判定できませんでした。')
+        exit()
+        
+
+def find_kanshi_idx(kan, shi, p):
+    
+    # 六十干支表から所定の干支のインデクスを返す
+    
+    for idx, sk in enumerate(kd.sixty_kanshi):
+        if (sk[0] == kan) and (sk[1] == shi):
+            return idx + p
+            
+    print('干支が見つかりませんでした。')
+    exit()
+
+
+def append_daiun(meishiki):
+    
+    # ＜機能＞
+    # 大運を命式に追加する
+    # ＜入力＞
+    #   - self.birthday（datetime）：生年月日
+    #   - self.sex（int）：性別の番号
+    # ＜出力＞
+    #   - daiun（list）：大運のリスト
+
+    daiun = []
+    year_ratio_list = convert_year_ratio(meishiki.birthday)
+
+    if is_junun_gyakuun(meishiki.sex, meishiki.nenchu[0]):  # 順運か逆運か？
+        ry = year_ratio_list[1]  # 次の節入日が立運の起算日
+        p = 1                    # 六十干支表を順にたどる
+    else:
+        ry = year_ratio_list[0]  # 前の節入日が立運の起算日
+        p = -1                   # 六十干支表を逆にたどる
+        
+    idx = find_kanshi_idx(meishiki.getchu[0], meishiki.getchu[1], p)
+    
+    for n in list(range(10, 140, 10)):
+        if idx >= 60:
+            idx = 0
+        kanshi_ = kd.sixty_kanshi[idx]
+        tsuhen_ = kd.kan_tsuhen[meishiki.nikkan].index(kanshi_[0])
+        daiun.append([ry, kanshi_[0], kanshi_[1], tsuhen_])
+        ry += 10
+        idx += p
+
+    

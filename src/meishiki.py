@@ -18,6 +18,7 @@ class Meishiki:
     getchu: list[int] = field(default_factory = list)
     nitchu: list[int] = field(default_factory = list)
     jichu: list[int] = field(default_factory = list)
+    nikkan: int = 0
     
     gogyo: list[int] = field(default_factory = list)
     inyo: list[int] = field(default_factory = list)
@@ -458,6 +459,7 @@ def build_meishiki(birthday, sex):
     getchu = [m_kan, m_shi, m_zkan]
     nitchu = [d_kan, d_shi, d_zkan]
     jichu  = [t_kan, t_shi, t_zkan]
+    nikkan = d_kan
     
     # 五行（木火土金水）のそれぞれの数を得る
     gogyo = append_gogyo(tenkan, chishi)
@@ -498,7 +500,7 @@ def build_meishiki(birthday, sex):
     # 命式を組成する
     meishiki = Meishiki(birthday, sex,
                         tenkan, chishi, zokan,
-                        nenchu, getchu, nitchu, jichu,
+                        nenchu, getchu, nitchu, jichu, nikkan,
                         gogyo, inyo, getsurei,
                         tsuhen, twelve_fortune,
                         kango, shigo, hogo, sango, hankai,
