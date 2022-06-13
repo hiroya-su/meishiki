@@ -483,7 +483,8 @@ def build_meishiki(birthday, sex):
     # 方合・三合・半会を得る
     hogo = append_hogo(chishi)
     sango = append_sango(chishi)
-    hankai = append_hankai(chishi)
+    if not sango:
+        hankai = append_hankai(chishi)
     
     # 七冲・刑・害を得る
     hitsuchu = append_hitsuchu(chishi)

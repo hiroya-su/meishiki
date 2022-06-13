@@ -82,6 +82,40 @@ def find_kanshi_idx(kan, shi, p):
     exit()
 
 
+def is_hogo(chishi_p):
+
+    # 方合の有無を判定する
+    for i, h in enumerate(kd.hogo):
+        if (h[0][0] in chishi_p) and (h[0][1] in chishi_p) and (h[0][2] in chishi_p):
+            return i
+    return -1
+
+
+def is_sango(chishi_p):
+
+    # 三合の有無を判定する
+    for i, s in enumerate(kd.sango):
+        if (s[0][0] in chishi_p) and (s[0][1] in chishi_p) and (s[0][2] in chishi_p):
+            return i
+    return -1
+
+
+def is_hankai(chishi, shi):
+
+    # 半会の有無を判定する
+    for i, h in enumerate(kd.hankai):
+        if ((h[0][0] in chishi) and (h[0][1] in [shi])) or ((h[0][0] in [shi]) and (h[0][1] in chishi)):
+            return i
+    return -1
+
+
+def is_tensen_chichu(nisshi, tsuhen, shi):
+    
+    if (nisshi == kd.hitsuchu_rev[shi]) and (tsuhen == 6):
+        return 1
+    return -1
+    
+    
 def append_daiun(meishiki):
     
     # ＜機能＞
@@ -100,11 +134,24 @@ def append_daiun(meishiki):
     idx = find_kanshi_idx(meishiki.getchu[0], meishiki.getchu[1], p)
     
     for n in list(range(10, 140, 10)):
+        
         if idx >= 60:
             idx = 0
-        kanshi_ = kd.sixty_kanshi[idx]
-        tsuhen_ = kd.kan_tsuhen[meishiki.nikkan].index(kanshi_[0])
-        daiun.append([ry, kanshi_[0], kanshi_[1], tsuhen_])
+        kan, shi = kd.sixty_kanshi[idx]
+        tsuhen = kd.kan_tsuhen[meishiki.nikkan].index(kan)
+        
+        chishi_p = [i for i in meishiki.chishi] + [shi]
+        
+        hogo = is_hogo(chishi_p)    # 方合
+        sango = is_sango(chishi_p)  # 三合
+        if sango == -1:
+            hankai = is_hankai(meishiki.chishi, shi)  # 半会
+        else:
+            hankai = -1
+        tc = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲
+        breakpoint()
+        
+        daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc])
         ry += 10
         idx += p
 
