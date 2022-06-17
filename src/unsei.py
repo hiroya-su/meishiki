@@ -115,7 +115,15 @@ def is_tensen_chichu(nisshi, tsuhen, shi):
         return 1
     return -1
     
+
+def is_chu(chishi, shi):
+
+    for i, s in enumerate(chishi):
+        if s == kd.hitsuchu[shi]:
+            return i
+    return -1
     
+
 def append_daiun(meishiki):
     
     # ＜機能＞
@@ -149,9 +157,13 @@ def append_daiun(meishiki):
         else:
             hankai = -1
         tc = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲
+        if tc == -1:
+            chu = is_chu(meishiki.chishi, shi)  # 冲
+        else:
+            chu = -1
         breakpoint()
         
-        daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc])
+        daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc, chu])
         ry += 10
         idx += p
 
