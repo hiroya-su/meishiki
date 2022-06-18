@@ -179,7 +179,6 @@ def append_nenun(meishiki):
     idx = (meishiki.birthday.year - 3) % 60 - 1 # + self.meishiki.is_setsuiri(2)
     
     for n in list(range(0, 120)):
-<<<<<<< HEAD
         kan, shi = kd.sixty_kanshi[idx]
         tsuhen = kd.kan_tsuhen[meishiki.nikkan].index(kan)
 
@@ -203,11 +202,6 @@ def append_nenun(meishiki):
             
             nenun.append([n, kan, shi, tsuhen, hogo])
         
-=======
-        kanshi_ = kd.sixty_kanshi[idx]
-        tsuhen_ = kd.kan_tsuhen[meishiki.nikkan].index(kanshi_[0])
-        nenun.append([n, kanshi_[0], kanshi_[1], tsuhen_])
->>>>>>> parent of 00f78dd... 年運で方合が出せるようにした
         idx += 1
         if idx >= 60:
             idx = 0
