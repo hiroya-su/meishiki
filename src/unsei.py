@@ -201,7 +201,7 @@ def append_nenun(meishiki):
             breakpoint()
             
             nenun.append([n, kan, shi, tsuhen, hogo])
-        
+            
         idx += 1
         if idx >= 60:
             idx = 0
