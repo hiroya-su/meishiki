@@ -82,21 +82,45 @@ def find_kanshi_idx(kan, shi, p):
     exit()
 
 
-def is_hogo(chishi_p):
+# def is_hogo(chishi_p):
 
+#     # 方合の有無を判定する
+#     for i, h in enumerate(kd.hogo):
+#         if (h[0][0] in chishi_p) and (h[0][1] in chishi_p) and (h[0][2] in chishi_p):
+#             return i
+#     return -1
+
+
+def is_hogo(chishi, shi):
+    
     # 方合の有無を判定する
     for i, h in enumerate(kd.hogo):
-        if (h[0][0] in chishi_p) and (h[0][1] in chishi_p) and (h[0][2] in chishi_p):
-            return i
+        hg = [i for i in h[0]]
+        if shi in hg:
+            hg.remove(shi)
+            if (hg[0] in chishi) and (hg[1] in chishi):
+                return i
     return -1
 
 
-def is_sango(chishi_p):
+# def is_sango(chishi_p):
+
+#     # 三合の有無を判定する
+#     for i, s in enumerate(kd.sango):
+#         if (s[0][0] in chishi_p) and (s[0][1] in chishi_p) and (s[0][2] in chishi_p):
+#             return i
+#     return -1
+
+
+def is_sango(chishi, shi):
 
     # 三合の有無を判定する
     for i, s in enumerate(kd.sango):
-        if (s[0][0] in chishi_p) and (s[0][1] in chishi_p) and (s[0][2] in chishi_p):
-            return i
+        sg = [i for i in s[0]]
+        if shi in sg:
+            sg.remove(shi)
+            if (sg[0] in chishi) and (sg[1] in chishi):
+                return i
     return -1
 
 
@@ -150,8 +174,8 @@ def append_daiun(meishiki):
         
         chishi_p = [i for i in meishiki.chishi] + [shi]
         
-        hogo = is_hogo(chishi_p)    # 方合
-        sango = is_sango(chishi_p)  # 三合
+        hogo = is_hogo(meishiki.chishi, shi)    # 方合
+        sango = is_sango(meishiki.chishi, shi)  # 三合
         if sango == -1:
             hankai = is_hankai(meishiki.chishi, shi)  # 半会
         else:
@@ -166,6 +190,7 @@ def append_daiun(meishiki):
         ry += 10
         idx += p
 
+    breakpoint()
     return daiun
 
     
@@ -187,12 +212,14 @@ def append_nenun(meishiki, daiun):
             d_idx += 1
         
         if n >= ry:
+            chishi_r = [i for i in meishiki.chishi] + [shi]
             chishi_p = [i for i in meishiki.chishi] + [daiun[d_idx][2]] + [shi]
-
+            
             if daiun[d_idx][4] == -1:
                 hogo = is_hogo(chishi_p)  # 方合
             else:
-                hogo = -1
+                hogo = is_hogo(chishi_r)
+            
             if daiun[d_idx][5] == -1:     # 三合
                 sango = is_sango(chishi_p)
                 if sango == -1:
@@ -200,7 +227,12 @@ def append_nenun(meishiki, daiun):
                 else:
                     hankai = -1
             else:
-                sango = -1
+                sango = is_sango(chishi_r)
+                if sango == -1:
+                    hankai = 1            # 半会（未実装）
+                else:
+                    hankai = -1
+            
             tc1 = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲（命式）
             tc2 = is_tensen_chichu(daiun[d_idx][2], kd.kan_tsuhen[daiun[d_idx][1]].index(kan), shi)  # 天戦地冲（大運）
             if tc1 == 1:
