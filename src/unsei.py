@@ -195,14 +195,22 @@ def append_nenun(meishiki, daiun):
                 hogo = -1
             if daiun[d_idx][5] == -1:     # 三合
                 sango = is_sango(chishi_p)
-                
-                
+                if sango == -1:
+                    hankai = 1            # 半会（未実装）
+                else:
+                    hankai = -1
             else:
                 sango = -1
+            tc1 = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲（命式）
+            tc2 = is_tensen_chichu(daiun[d_idx][2], kd.kan_tsuhen[daiun[d_idx][1]].index(kan), shi)  # 天戦地冲（大運）
+            if tc1 == 1:
+                tc = 1
+            elif tc2 == 1:
+                tc = 2
+            else:
+                tc = -1
             
-            breakpoint()
-            
-            nenun.append([n, kan, shi, tsuhen, hogo, sango])
+            nenun.append([n, kan, shi, tsuhen, hogo, sango, hankai, tc])
             
         idx += 1
         if idx >= 60:
