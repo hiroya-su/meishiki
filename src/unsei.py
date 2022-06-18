@@ -161,6 +161,7 @@ def append_daiun(meishiki):
             chu = is_chu(meishiki.chishi, shi)  # 冲
         else:
             chu = -1
+        breakpoint()
         
         daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc, chu])
         ry += 10
@@ -169,16 +170,16 @@ def append_daiun(meishiki):
     return daiun
 
     
-def append_nenun(meishiki, daiun):
+def append_nenun(meishiki):
     
     # ＜機能＞
     # 年運を命式に追加する
 
     nenun = []
-    idx = (meishiki.birthday.year - 3) % 60 - 1 # + meishiki.is_setsuiri(2)
-    ry = daiun[0][0]
-
+    idx = (meishiki.birthday.year - 3) % 60 - 1 # + self.meishiki.is_setsuiri(2)
+    
     for n in list(range(0, 120)):
+<<<<<<< HEAD
         kan, shi = kd.sixty_kanshi[idx]
         tsuhen = kd.kan_tsuhen[meishiki.nikkan].index(kan)
 
@@ -202,6 +203,11 @@ def append_nenun(meishiki, daiun):
             
             nenun.append([n, kan, shi, tsuhen, hogo])
         
+=======
+        kanshi_ = kd.sixty_kanshi[idx]
+        tsuhen_ = kd.kan_tsuhen[meishiki.nikkan].index(kanshi_[0])
+        nenun.append([n, kanshi_[0], kanshi_[1], tsuhen_])
+>>>>>>> parent of 00f78dd... 年運で方合が出せるようにした
         idx += 1
         if idx >= 60:
             idx = 0
@@ -215,7 +221,7 @@ def build_unsei(meishiki):
     daiun = append_daiun(meishiki)
 
     # 年運を得る
-    nenun = append_nenun(meishiki, daiun)
+    nenun = append_nenun(meishiki)
 
     unsei = Unsei(daiun, nenun)
 
