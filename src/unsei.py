@@ -190,6 +190,13 @@ def append_nenun(meishiki, daiun):
                 hogo = is_hogo(chishi_p)  # 方合
             else:
                 hogo = -1
+            if daiun[d_idx][5] == -1:     # 三合
+                sango = is_sango(chishi_p)
+                
+                
+            else:
+                sango = -1
+            
             
             breakpoint()
             
