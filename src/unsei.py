@@ -95,7 +95,7 @@ def is_hogo(chishi, shi):
     
     # 方合の有無を判定する
     for i, h in enumerate(kd.hogo):
-        hg = [i for i in h[0]]
+        hg = [j for j in h[0]]
         if shi in hg:
             hg.remove(shi)
             if (hg[0] in chishi) and (hg[1] in chishi):
@@ -116,7 +116,7 @@ def is_sango(chishi, shi):
 
     # 三合の有無を判定する
     for i, s in enumerate(kd.sango):
-        sg = [i for i in s[0]]
+        sg = [j for j in s[0]]
         if shi in sg:
             sg.remove(shi)
             if (sg[0] in chishi) and (sg[1] in chishi):
@@ -141,9 +141,10 @@ def is_tensen_chichu(nisshi, tsuhen, shi):
     
 
 def is_chu(chishi, shi):
-
-    for i, s in enumerate(chishi):
-        if s == kd.hitsuchu[shi]:
+    
+    ch = [chishi[0]] + [-1] + [chishi[2]] + [chishi[3]]
+    for i, s in enumerate(ch):
+        if s == kd.hitsuchu_nodir[shi]:
             return i
     return -1
     
