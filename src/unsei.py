@@ -147,8 +147,24 @@ def is_chu(chishi, shi):
         if s == kd.hitsuchu_nodir[shi]:
             return i
     return -1
-    
 
+
+def is_kei(chishi, shi):
+    
+    for i, s in enumerate(chishi):
+        if s == kd.kei[shi]:
+            return i
+    return -1
+
+
+def is_gai(chishi, shi):
+
+    for i, s in enumerate(chishi):
+        if s == kd.gai[shi]:
+            return i
+    return -1
+
+    
 def append_daiun(meishiki):
     
     # ＜機能＞
@@ -186,8 +202,10 @@ def append_daiun(meishiki):
             chu = is_chu(meishiki.chishi, shi)  # 冲
         else:
             chu = -1
+        kei = is_kei(meishiki.chishi, shi)  # 刑
+        gai = is_gai(meishiki.chishi, shi)  # 害
         
-        daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc, chu])
+        daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc, chu, kei, gai])
         ry += 10
         idx += p
 
