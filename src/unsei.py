@@ -82,6 +82,21 @@ def find_kanshi_idx(kan, shi, p):
     exit()
 
 
+def is_kango(tenkan_zokan, kan):
+
+    for i, k in enumerate(tenkan_zokan):
+        if k == kd.kango[kan]:
+            return i
+    return -1
+    
+def is_shigo(chishi, shi):
+
+    for i, s in enumerate(chishi):
+        if s == kd.shigo[shi]:
+            return i
+    return -1
+    
+    
 # def is_hogo(chishi_p):
 
 #     # 方合の有無を判定する
@@ -189,7 +204,8 @@ def append_daiun(meishiki):
         kan, shi = kd.sixty_kanshi[idx]
         tsuhen = kd.kan_tsuhen[meishiki.nikkan].index(kan)
         
-        chishi_p = [i for i in meishiki.chishi] + [shi]
+        kango = is_kango(meishiki.tenkan + meishiki.zokan, kan)
+        shigo = is_shigo(meishiki.chishi, shi)
         
         hogo = is_hogo(meishiki.chishi, shi)    # 方合
         sango = is_sango(meishiki.chishi, shi)  # 三合
@@ -205,7 +221,7 @@ def append_daiun(meishiki):
         kei = is_kei(meishiki.chishi, shi)  # 刑
         gai = is_gai(meishiki.chishi, shi)  # 害
         
-        daiun.append([ry, kan, shi, tsuhen, hogo, sango, hankai, tc, chu, kei, gai])
+        daiun.append([ry, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc, chu, kei, gai])
         ry += 10
         idx += p
 
