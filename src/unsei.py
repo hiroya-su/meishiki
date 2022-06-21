@@ -139,6 +139,15 @@ def is_hogo(chishi, shi):
     return -1
 
 
+def is_hogo_y(chishi, d_shi, shi):
+
+    for i, hogo in enumerate(kd.hogo):
+        for c in chishi:
+            if (c in hogo) and (d_shi in hogo) and (shi in hogo):
+                return i
+    return -1
+
+
 # def is_sango(chishi_p):
 
 #     # 三合の有無を判定する
@@ -156,6 +165,15 @@ def is_sango(chishi, shi):
         if shi in sg:
             sg.remove(shi)
             if (sg[0] in chishi) and (sg[1] in chishi):
+                return i
+    return -1
+
+
+def is_sango_y(chishi, d_shi, shi):
+
+    for i, sango in enumerate(kd.sango):
+        for c in chishi:
+            if (c in sango) and (d_shi in sango) and (shi in sango):
                 return i
     return -1
 
@@ -271,8 +289,11 @@ def append_nenun(meishiki, daiun):
             d_kan = daiun[d_idx][1]
             d_shi = daiun[d_idx][2]
             
-            kango = is_kango_y(meishiki.tenkan + meishiki.zokan, d_kan, kan)
-            shigo = is_shigo_y(meishiki.chishi, d_shi, shi)
+            kango = is_kango_y(meishiki.tenkan + meishiki.zokan, d_kan, kan)  # 干合
+            shigo = is_shigo_y(meishiki.chishi, d_shi, shi)  # 支合
+
+            hogo = is_hogo_y(meishiki.chishi, d_shi, shi)    # 方号
+            sango = is_sango_y(meishiki.chishi, d_shi, shi)  # 三合
             
             breakpoint()
             
