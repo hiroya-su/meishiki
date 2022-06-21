@@ -88,6 +88,17 @@ def is_kango(tenkan_zokan, kan):
         if k == kd.kango[kan]:
             return i
     return -1
+
+
+def is_kango_y(tenkan_zokan, d_kan, kan):
+
+    for i, k in enumerate(tenkan_zokan):
+        if k == kd.kango[kan]:
+            return i
+    if d_kan == kd.kango[kan]:
+        return len(tenkan_zokan)
+    return -1
+    
     
 def is_shigo(chishi, shi):
 
@@ -95,6 +106,16 @@ def is_shigo(chishi, shi):
         if s == kd.shigo[shi]:
             return i
     return -1
+
+
+def is_shigo_y(chishi, d_shi, shi):
+
+    for i, s in enumerate(chishi):
+        if s == kd.shigo[shi]:
+            return i
+    if d_shi == kd.shigo[shi]:
+        return len(chishi)
+    return -1    
     
     
 # def is_hogo(chishi_p):
@@ -204,8 +225,8 @@ def append_daiun(meishiki):
         kan, shi = kd.sixty_kanshi[idx]
         tsuhen = kd.kan_tsuhen[meishiki.nikkan].index(kan)
         
-        kango = is_kango(meishiki.tenkan + meishiki.zokan, kan)
-        shigo = is_shigo(meishiki.chishi, shi)
+        kango = is_kango(meishiki.tenkan + meishiki.zokan, kan)  # 干合
+        shigo = is_shigo(meishiki.chishi, shi)  # 支合
         
         hogo = is_hogo(meishiki.chishi, shi)    # 方合
         sango = is_sango(meishiki.chishi, shi)  # 三合
@@ -225,7 +246,6 @@ def append_daiun(meishiki):
         ry += 10
         idx += p
 
-    breakpoint()
     return daiun
 
     
@@ -247,8 +267,14 @@ def append_nenun(meishiki, daiun):
             d_idx += 1
         
         if n >= ry:
-            chishi_r = [i for i in meishiki.chishi] + [shi]
-            chishi_p = [i for i in meishiki.chishi] + [daiun[d_idx][2]] + [shi]
+            
+            d_kan = daiun[d_idx][1]
+            d_shi = daiun[d_idx][2]
+            
+            kango = is_kango_y(meishiki.tenkan + meishiki.zokan, d_kan, kan)
+            shigo = is_shigo_y(meishiki.chishi, d_shi, shi)
+            
+            breakpoint()
             
             if daiun[d_idx][4] == -1:
                 hogo = is_hogo(chishi_p)  # 方合
