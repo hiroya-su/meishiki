@@ -314,13 +314,16 @@ def append_nenun(meishiki, daiun):
                 hankai = -1
             
             tc1 = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲（命式）
-            tc2 = is_tensen_chichu(daiun[d_idx][2], kd.kan_tsuhen[daiun[d_idx][1]].index(kan), shi)  # 天戦地冲（大運）
+            tc2 = is_tensen_chichu(d_shi, kd.kan_tsuhen[d_kan].index(kan), shi)  # 天戦地冲（大運）
             if tc1 == 1:
                 tc = 1
             elif tc2 == 1:
                 tc = 2
             else:
                 tc = -1
+            # 冲
+            # 刑
+            # 害
             
             nenun.append([n, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc])
             
