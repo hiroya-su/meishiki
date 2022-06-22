@@ -7,7 +7,8 @@ def output_html(meishiki, unsei):
     env = Environment(loader = FileSystemLoader('html/'))
     template = env.get_template('template.html')
     
-    birthday_str = meishiki.birthday.strftime('%Y年%-m月%-d日 %-H時%-M分生')
+    wareki = kd.convert_to_wareki(meishiki.birthday)
+    birthday_str = meishiki.birthday.strftime(f'{wareki}%-m月%-d日 %-H時%-M分生')
     sex_str = '男命' if meishiki.sex == 0 else '女命'
 
     daiun = unsei.daiun
@@ -34,8 +35,37 @@ def output_html(meishiki, unsei):
     
     content.update(d_nen)
     
+    age = (int(dt.today().strftime("%Y%m%d")) - int(meishiki.birthday.strftime("%Y%m%d"))) // 10000
+    if dt.today() > meishiki.birthday:
+        age += 1
+    for i, n in enumerate(nenun):
+        if age == n[0]:
+            break
+    n1 = '&nbsp;' + str(nenun[i][0]) if len(str(nenun[i][0])) == 1 else str(nenun[i][0])
+    n2 = '&nbsp;' + str(nenun[i+1][0]) if len(str(nenun[i+1][0])) == 1 else str(nenun[i+1][0])
+    n3 = '&nbsp;' + str(nenun[i+2][0]) if len(str(nenun[i+2][0])) == 1 else str(nenun[i+2][0])
+    n4 = '&nbsp;' + str(nenun[i+3][0]) if len(str(nenun[i+3][0])) == 1 else str(nenun[i+3][0])
+    n5 = '&nbsp;' + str(nenun[i+4][0]) if len(str(nenun[i+4][0])) == 1 else str(nenun[i+4][0])
+    n6 = '&nbsp;' + str(nenun[i+5][0]) if len(str(nenun[i+5][0])) == 1 else str(nenun[i+5][0])
+    n7 = '&nbsp;' + str(nenun[i+6][0]) if len(str(nenun[i+6][0])) == 1 else str(nenun[i+6][0])
+    n8 = '&nbsp;' + str(nenun[i+7][0]) if len(str(nenun[i+7][0])) == 1 else str(nenun[i+7][0])
+    n9 = '&nbsp;' + str(nenun[i+8][0]) if len(str(nenun[i+8][0])) == 1 else str(nenun[i+8][0])
+    n10 = '&nbsp;' + str(nenun[i+9][0]) if len(str(nenun[i+9][0])) == 1 else str(nenun[i+9][0])
+    n11 = '&nbsp;' + str(nenun[i+10][0]) if len(str(nenun[i+10][0])) == 1 else str(nenun[i+10][0])
     
-    
+    n_nen = {'n1': n1, 'n2': n2, 'n3': n3, 'n4': n4, 'n5': n5, 'n6': n6, 'n7': n7, 'n8': n8, 'n9': n9, 'n10': n10, 'n11': n11,
+             'n_tsuhen1': kd.tsuhen[nenun[i][3]], 'n_kan1': kd.kan[nenun[i][1]], 'n_shi1': kd.shi[nenun[i][2]],
+             'n_tsuhen2': kd.tsuhen[nenun[i+1][3]], 'n_kan2': kd.kan[nenun[i+1][1]], 'n_shi2': kd.shi[nenun[i+1][2]],
+             'n_tsuhen3': kd.tsuhen[nenun[i+2][3]], 'n_kan3': kd.kan[nenun[i+2][1]], 'n_shi3': kd.shi[nenun[i+2][2]],
+             'n_tsuhen4': kd.tsuhen[nenun[i+3][3]], 'n_kan4': kd.kan[nenun[i+3][1]], 'n_shi4': kd.shi[nenun[i+3][2]],
+             'n_tsuhen5': kd.tsuhen[nenun[i+4][3]], 'n_kan5': kd.kan[nenun[i+4][1]], 'n_shi5': kd.shi[nenun[i+4][2]],
+             'n_tsuhen6': kd.tsuhen[nenun[i+5][3]], 'n_kan6': kd.kan[nenun[i+5][1]], 'n_shi6': kd.shi[nenun[i+5][2]],
+             'n_tsuhen7': kd.tsuhen[nenun[i+6][3]], 'n_kan7': kd.kan[nenun[i+6][1]], 'n_shi7': kd.shi[nenun[i+6][2]],
+             'n_tsuhen8': kd.tsuhen[nenun[i+7][3]], 'n_kan8': kd.kan[nenun[i+7][1]], 'n_shi8': kd.shi[nenun[i+7][2]],
+             'n_tsuhen9': kd.tsuhen[nenun[i+8][3]], 'n_kan9': kd.kan[nenun[i+8][1]], 'n_shi9': kd.shi[nenun[i+8][2]],
+             'n_tsuhen10': kd.tsuhen[nenun[i+9][3]], 'n_kan10': kd.kan[nenun[i+9][1]], 'n_shi10': kd.shi[nenun[i+9][2]],}
+
+    content.update(n_nen)
     
     result = template.render(content)
     with open('html/' + meishiki.birthday.strftime('%Y_%m%d_%H%M_') + str(meishiki.sex) + '.html', 'w') as f:
