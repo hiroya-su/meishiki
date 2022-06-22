@@ -74,5 +74,123 @@ def output_html(meishiki, unsei):
 
 def output_stdio(meishiki, unsei):
     
+    print('＜五行＞')
+    for i, g in enumerate(meishiki.gogyo):
+        print(kd.gogyo[i] + '：' + str(g))
+        
+    print()
+    
+    print('＜陰陽のバランス＞')
+    print('陰：' + str(meishiki.inyo[1]))
+    print('陽：' + str(meishiki.inyo[0]))
+    
+    print()
+    
+    print('＜月令＞')
+    print(kd.getsurei[meishiki.getsurei])
+    
+    print()
+    
+    print('＜干合＞')
+    if not meishiki.kango:
+        print('干合なし')
+    else:
+        for k in meishiki.kango:
+            b1 = kd.kango_chu[k[0][1]]   # 干１の場所
+            k1 = kd.kan[k[0][0]]         # 干１
+            b2 = kd.kango_chu[k[1][1]]   # 干２の場所
+            k2 = kd.kan[k[1][0]]         # 干２
+            print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが干合')
+
+    print()
+
+    print('＜支合＞')
+    if not meishiki.shigo:
+        print('支合なし')
+    else:
+        for s in meishiki.shigo:
+            b1 = kd.shigo_chu[s[0][1]]   # 支１の場所
+            k1 = kd.shi[s[0][0]]         # 支１
+            b2 = kd.shigo_chu[s[1][1]]   # 支２の場所
+            k2 = kd.shi[s[1][0]]         # 支２
+            print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが支合')
+            
+    print()
+    print('＜三合会局＞')
+    if not meishiki.sango:
+        print('三合会局なし')
+    else:
+        sango = meishiki.sango
+        print(kd.shi[sango[0][0]] + ', ' + kd.shi[sango[0][1]] + ', ' + kd.shi[sango[0][2]] + 'の三合' + kd.gogyo[sango[1]]+ '局により、月支蔵干が' + kd.kan[sango[3]] + '（' + kd.tsuhen[sango[4]] + '）から' + kd.kan[sango[2]] + '（' + kd.tsuhen[sango[5]] +'）に変化する')
+
+    print()
+    
+    print('＜半会＞')
+    if not meishiki.hankai:
+        print('半会なし')
+    else:
+        hankai = meishiki.hankai
+        for h in hankai:
+            print(kd.shi[h[0][0]] + ', ' + kd.shi[h[0][1]] + 'が' + kd.gogyo[h[2]] + '半会')
+        
+    print()
+    
+    print('＜方合＞')
+    if not meishiki.hogo:
+        print('方合なし')
+    else:
+        hogo = meishiki.hogo
+        print(kd.shi[hogo[0][0]] + ', ' + kd.shi[hogo[0][1]] + ', ' + kd.shi[hogo[0][2]] + 'で' + kd.gogyo[hogo[1]] + '方合')
+
+    print()
+    
+    print('＜空亡＞')
+    if not meishiki.kubo:
+        print('空亡なし')
+    else:
+        for k in meishiki.kubo:
+            b1 = kd.shigo_chu[k[1]]
+            k1 = kd.shi[k[0]]
+            print(b1 + 'の「' + k1 + '」が空亡')
+
+    print()
+    
+    print('＜七冲＞')
+    if not meishiki.hitsuchu:
+        print('七冲なし')
+    else:
+        for h in meishiki.hitsuchu:
+            b1 = kd.shigo_chu[h[0][1]]   # 支１の場所
+            k1 = kd.shi[h[0][0]]         # 支１
+            b2 = kd.shigo_chu[h[1][1]]   # 支２の場所
+            k2 = kd.shi[h[1][0]]         # 支２
+            print(b1 + 'の「' + k1 + '」が' + b2 + 'の「' + k2 + '」を冲する')
+
+    print()
+    
+    print('＜刑＞')
+    if not meishiki.kei:
+        print('刑なし')
+    else:
+        for k in meishiki.kei:
+            b1 = kd.shigo_chu[k[0][1]]   # 支１の場所
+            k1 = kd.shi[k[0][0]]         # 支１
+            b2 = kd.shigo_chu[k[1][1]]   # 支２の場所
+            k2 = kd.shi[k[1][0]]         # 支２
+            print(b1 + 'の「' + k1 + '」が、' + b2 + 'の「' + k2 + '」を刑する')
+
+    print()
+    
+    print('＜害＞')
+    if not meishiki.gai:
+        print('害なし')
+    else:
+        for g in meishiki.gai:
+            b1 = kd.shigo_chu[g[0][1]]   # 支１の場所
+            k1 = kd.shi[g[0][0]]         # 支１
+            b2 = kd.shigo_chu[g[1][1]]   # 支２の場所
+            k2 = kd.shi[g[1][0]]         # 支２
+            print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが害')
+    
     return 1
 
