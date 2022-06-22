@@ -8,7 +8,6 @@ class Unsei:
 
     daiun: list[int] = field(default_factory = list)
     nenun: list[int] = field(default_factory = list)
-    
 
 
 def convert_year_ratio(birthday):
@@ -331,8 +330,6 @@ def append_nenun(meishiki, daiun):
         if idx >= 60:
             idx = 0
 
-    breakpoint()
-
     return nenun
 
 
@@ -344,6 +341,4 @@ def build_unsei(meishiki):
     # 年運を得る
     nenun = append_nenun(meishiki, daiun)
 
-    unsei = Unsei(daiun, nenun)
-
-    return unsei
+    return Unsei(daiun, nenun)

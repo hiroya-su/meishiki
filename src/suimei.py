@@ -1,5 +1,6 @@
 from meishiki import build_meishiki
 from unsei import build_unsei
+from output import output_html, output_stdio
 from datetime import datetime as dt
 
 if __name__ == '__main__':
@@ -18,6 +19,10 @@ if __name__ == '__main__':
 
     # 運勢を組成する
     unsei = build_unsei(meishiki)
-
+    
+    # 命式・運勢を出力する
+    f1 = output_html(meishiki, unsei)
+    f2 = output_stdio(meishiki, unsei)
+    
     breakpoint()
     
