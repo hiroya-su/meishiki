@@ -187,6 +187,14 @@ def is_hankai(chishi, shi):
     return -1
 
 
+def is_hankai_y(chishi, d_shi, shi):
+
+    for i, h in enumerate(kd.hankai):
+        if ((h[0][0] in chishi) and (h[0][1] in [shi])) or ((h[0][0] in [shi]) and (h[0][1] in chishi)) or ((h[0][0] in [shi]) and (h[0][1] in [d_shi])) or ((h[0][0] in [d_shi]) and (h[0][1] in [shi])):
+            return i
+    return -1
+
+
 def is_tensen_chichu(nisshi, tsuhen, shi):
     
     if (nisshi == kd.hitsuchu_rev[shi]) and (tsuhen == 6):
@@ -292,28 +300,18 @@ def append_nenun(meishiki, daiun):
             kango = is_kango_y(meishiki.tenkan + meishiki.zokan, d_kan, kan)  # 干合
             shigo = is_shigo_y(meishiki.chishi, d_shi, shi)  # 支合
 
-            hogo = is_hogo_y(meishiki.chishi, d_shi, shi)    # 方号
-            sango = is_sango_y(meishiki.chishi, d_shi, shi)  # 三合
-            
-            breakpoint()
-            
-            if daiun[d_idx][4] == -1:
-                hogo = is_hogo(chishi_p)  # 方合
+            if daiun[d_idx][6] == -1:
+                hogo = is_hogo_y(meishiki.chishi, d_shi, shi)    # 方号
             else:
-                hogo = is_hogo(chishi_r)
-            
-            if daiun[d_idx][5] == -1:     # 三合
-                sango = is_sango(chishi_p)
-                if sango == -1:
-                    hankai = 1            # 半会（未実装）
-                else:
-                    hankai = -1
+                hogo = -1
+            if daiun[d_idx][7] == -1:
+                sango = is_sango_y(meishiki.chishi, d_shi, shi)  # 三合
             else:
-                sango = is_sango(chishi_r)
-                if sango == -1:
-                    hankai = 1            # 半会（未実装）
-                else:
-                    hankai = -1
+                sango = -1
+            if sango == -1:
+                hankai = is_hankai_y(meishiki.chishi, d_shi, shi)  # 半会
+            else:
+                hankai = -1
             
             tc1 = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲（命式）
             tc2 = is_tensen_chichu(daiun[d_idx][2], kd.kan_tsuhen[daiun[d_idx][1]].index(kan), shi)  # 天戦地冲（大運）
@@ -324,11 +322,13 @@ def append_nenun(meishiki, daiun):
             else:
                 tc = -1
             
-            nenun.append([n, kan, shi, tsuhen, hogo, sango, hankai, tc])
+            nenun.append([n, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc])
             
         idx += 1
         if idx >= 60:
             idx = 0
+
+    breakpoint()
 
     return nenun
 
