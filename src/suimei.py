@@ -5,13 +5,17 @@ from datetime import datetime as dt
 
 if __name__ == '__main__':
 
-    birthday = dt(year = 1978, month = 7, day = 18, hour = 14, minute = 47)
-    sex = 1
-    # birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
-    # sex = 0
+    # birthday = dt(year = 1978, month = 7, day = 18, hour = 14, minute = 47)
+    # sex = 1
+    birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
+    sex = 0
     # birthday = dt(year = 1984, month = 7, day = 17, hour = 18, minute = 25)
     # sex = 0
     # birthday = dt(year = 1983, month = 12, day = 28, hour = 4, minute = 35)
+    # sex = 1
+    # birthday = dt(year = 1951, month = 1, day = 8, hour = 0, minute = 50)
+    # sex = 1
+    # birthday = dt(year = 1952, month = 4, day = 13, hour = 0, minute = 40)
     # sex = 1
 
     # 命式を組成する
@@ -25,4 +29,3 @@ if __name__ == '__main__':
     f2 = output_stdio(meishiki, unsei)
     
     breakpoint()
-    

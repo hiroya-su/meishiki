@@ -34,10 +34,8 @@ def output_html(meishiki, unsei):
              'd_tsuhen10': kd.tsuhen[daiun[9][3]], 'd_kan10': kd.kan[daiun[9][1]], 'd_shi10': kd.shi[daiun[9][2]],}
     
     content.update(d_nen)
-    
-    age = (int(dt.today().strftime("%Y%m%d")) - int(meishiki.birthday.strftime("%Y%m%d"))) // 10000
-    if dt.today() > meishiki.birthday:
-        age += 1
+
+    age = dt.today().year - meishiki.birthday.year
     for i, n in enumerate(nenun):
         if age == n[0]:
             break
@@ -75,6 +73,6 @@ def output_html(meishiki, unsei):
 
 
 def output_stdio(meishiki, unsei):
-
+    
     return 1
 

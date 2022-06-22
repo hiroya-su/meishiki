@@ -210,10 +210,37 @@ def is_chu(chishi, shi):
     return -1
 
 
+def is_chu_y(chishi, d_shi, shi):
+    
+    ch = chishi + [d_shi]
+    for i, s in enumerate(ch):
+        if s == kd.hitsuchu_nodir[shi]:
+            return i
+    return -1
+    
+    
 def is_kei(chishi, shi):
     
     for i, s in enumerate(chishi):
         if s == kd.kei[shi]:
+            return i
+    return -1
+
+
+def is_kei_y(chishi, d_shi, shi):
+
+    ch = chishi + [d_shi]
+    for i, s in enumerate(ch):
+        if s == kd.kei[shi]:
+            return i
+    return -1
+
+
+def is_gai_y(chishi, d_shi, shi):
+
+    ch = chishi + [d_shi]
+    for i, s in enumerate(ch):
+        if s == kd.gai[shi]:
             return i
     return -1
 
@@ -314,17 +341,13 @@ def append_nenun(meishiki, daiun):
             
             tc1 = is_tensen_chichu(meishiki.nitchu[1], tsuhen, shi)  # 天戦地冲（命式）
             tc2 = is_tensen_chichu(d_shi, kd.kan_tsuhen[d_kan].index(kan), shi)  # 天戦地冲（大運）
-            if tc1 == 1:
-                tc = 1
-            elif tc2 == 1:
-                tc = 2
-            else:
-                tc = -1
-            # 冲
-            # 刑
-            # 害
+            tc = 1 if tc1 == 1 else 2 if tc2 ==1 else -1
+
+            chu = is_chu_y(meishiki.chishi, d_shi, shi)  # 冲
+            kei = is_kei_y(meishiki.chishi, d_shi, shi)  # 刑
+            gai = is_gai_y(meishiki.chishi, d_shi, shi)  # 害
             
-            nenun.append([n, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc])
+            nenun.append([n, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc, chu, kei, gai])
             
         idx += 1
         if idx >= 60:
