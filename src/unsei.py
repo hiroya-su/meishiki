@@ -343,7 +343,10 @@ def append_nenun(meishiki, daiun):
             tc2 = is_tensen_chichu(d_shi, kd.kan_tsuhen[d_kan].index(kan), shi)  # 天戦地冲（大運）
             tc = 1 if tc1 == 1 else 2 if tc2 ==1 else -1
 
-            chu = is_chu_y(meishiki.chishi, d_shi, shi)  # 冲
+            if tc == -1:
+                chu = is_chu_y(meishiki.chishi, d_shi, shi)  # 冲
+            else:
+                chu = -1
             kei = is_kei_y(meishiki.chishi, d_shi, shi)  # 刑
             gai = is_gai_y(meishiki.chishi, d_shi, shi)  # 害
             

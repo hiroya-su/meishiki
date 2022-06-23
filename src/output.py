@@ -194,20 +194,20 @@ def output_stdio(meishiki, unsei):
             k2 = kd.shi[g[1][0]]         # 支２
             print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが害')
 
-    print()
-            
     daiun = unsei.daiun
     nenun = unsei.nenun
 
     ry = daiun[0][0]
     d_idx = 0
+    year = meishiki.birthday.year + ry
     
     for n, nen in enumerate(nenun):
         
-        if (n != ry) and (n % 10 == ry):
+        if (nen[0] != ry) and (nen[0] % 10 == ry):
             d_idx += 1
 
-        if nen[0] == daiun[d_idx][0] + ry:
+        if nen[0] == daiun[d_idx][0]:
+            print()
             d_kan = kd.kan[daiun[d_idx][1]] # 大運の干
             d_shi = kd.shi[daiun[d_idx][2]] # 大運の支
             d_tsuhen = kd.tsuhen[daiun[d_idx][3]] # 大運の通変
@@ -232,8 +232,41 @@ def output_stdio(meishiki, unsei):
                 cont += '害 '
             print(cont)
             print('======')
-
         
+        wareki = kd.convert_to_wareki(dt(year = year, month = meishiki.birthday.month, day = meishiki.birthday.day))
+        if len(str(nen[0])) == 1:
+            age = '  ' + str(nen[0])
+        elif len(str(nen[0])) == 2:
+            age = ' ' + str(nen[0])
+        else:
+            age = str(nen[0])
+        cont = str(year) + '年（' + wareki + '）| ' + age + '歳 | '
+        
+        n_kan = kd.kan[nen[1]] # 年運の干
+        n_shi = kd.shi[nen[2]] # 年運の支
+        n_tsuhen = kd.tsuhen[nen[3]] # 年運の通変
+        cont += ''.join([n_kan, n_shi]) + ' (' + n_tsuhen + ') | '
+        if nen[4] != -1:
+            cont += '干合 '
+        if nen[5] != -1:
+            cont += '支合 '
+        if nen[6] != -1:
+            cont += kd.gogyo[kd.hogo[nen[6]][1]] + '方合 '
+        if nen[7] != -1:
+            cont += '三合' + kd.gogyo[kd.sango[nen[7]][1]] + '局 '
+        if nen[8] != -1:
+            cont += kd.gogyo[kd.hankai[nen[8]][2]] + '半会 '
+        if nen[9] != -1:
+            cont += '天戦地冲 '
+        if nen[10] != -1:
+            cont += '冲 '
+        if nen[11] != -1:
+            cont += '刑 '
+        if nen[12] != -1:
+            cont += '害 '
+        print(cont)
+        # breakpoint()
+        year += 1
     
     return 1
 
