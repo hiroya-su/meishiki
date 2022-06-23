@@ -9,10 +9,10 @@ if __name__ == '__main__':
     # sex = 1
     # birthday = dt(year = 1978, month = 11, day = 21, hour = 13, minute = 19)
     # sex = 1
-    # birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
-    # sex = 0
-    birthday = dt(year = 1984, month = 7, day = 17, hour = 18, minute = 25)
+    birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
     sex = 0
+    # birthday = dt(year = 1984, month = 7, day = 17, hour = 18, minute = 25)
+    # sex = 0
     # birthday = dt(year = 1983, month = 12, day = 28, hour = 4, minute = 35)
     # sex = 1
     # birthday = dt(year = 1951, month = 1, day = 8, hour = 0, minute = 50)

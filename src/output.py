@@ -66,10 +66,11 @@ def output_html(meishiki, unsei):
     content.update(n_nen)
     
     result = template.render(content)
-    with open('html/' + meishiki.birthday.strftime('%Y_%m%d_%H%M_') + str(meishiki.sex) + '.html', 'w') as f:
+    file_name = 'html/' + meishiki.birthday.strftime('%Y_%m%d_%H%M_') + str(meishiki.sex) + '.html'
+    with open(file_name, 'w') as f:
         f.write(result)
     
-    return 1
+    return file_name
 
 
 def output_stdio(meishiki, unsei):
@@ -116,6 +117,7 @@ def output_stdio(meishiki, unsei):
             print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが支合')
             
     print()
+    
     print('＜三合会局＞')
     if not meishiki.sango:
         print('三合会局なし')
@@ -191,6 +193,47 @@ def output_stdio(meishiki, unsei):
             b2 = kd.shigo_chu[g[1][1]]   # 支２の場所
             k2 = kd.shi[g[1][0]]         # 支２
             print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが害')
+
+    print()
+            
+    daiun = unsei.daiun
+    nenun = unsei.nenun
+
+    ry = daiun[0][0]
+    d_idx = 0
+    
+    for n, nen in enumerate(nenun):
+        
+        if (n != ry) and (n % 10 == ry):
+            d_idx += 1
+
+        if nen[0] == daiun[d_idx][0] + ry:
+            d_kan = kd.kan[daiun[d_idx][1]] # 大運の干
+            d_shi = kd.shi[daiun[d_idx][2]] # 大運の支
+            d_tsuhen = kd.tsuhen[daiun[d_idx][3]] # 大運の通変
+            cont = ''.join([d_kan, d_shi]) + ' (' + d_tsuhen + ')：'
+            if daiun[d_idx][4] != -1:
+                cont += '干合 '
+            if daiun[d_idx][5] != -1:
+                cont += '支合 '
+            if daiun[d_idx][6] != -1:
+                cont += kd.gogyo[kd.hogo[daiun[d_idx][6]][1]] + '方合 '
+            if daiun[d_idx][7] != -1:
+                cont += '三合' + kd.gogyo[kd.sango[daiun[d_idx][7]][1]] + '局 '
+            if daiun[d_idx][8] != -1:
+                cont += kd.gogyo[kd.hankai[daiun[d_idx][8]][2]] + '半会 '
+            if daiun[d_idx][9] != -1:
+                cont += '天戦地冲 '
+            if daiun[d_idx][10] != -1:
+                cont += '冲 '
+            if daiun[d_idx][11] != -1:
+                cont += '刑 '
+            if daiun[d_idx][12] != -1:
+                cont += '害 '
+            print(cont)
+            print('======')
+
+        
     
     return 1
 
