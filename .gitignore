@@ -2,8 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
+<<<<<<< HEAD
 setsuiri/
 .DS_Store
+=======
+>>>>>>> origin/master
 
 # C extensions
 *.so

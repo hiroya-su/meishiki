@@ -6,9 +6,7 @@ import sys
 
 if __name__ == '__main__':
 
-    b = sys.argv[1]
-    t = sys.argv[2]
-    birthday = dt.strptime(b + ' ' + t, '%Y-%m-%d %H:%M')
+    birthday = dt.strptime(sys.argv[1] + ' ' + sys.argv[2], '%Y-%m-%d %H:%M')
     sex = int(sys.argv[3])
     
     # 命式を組成する
