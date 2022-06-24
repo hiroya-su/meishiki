@@ -11,6 +11,8 @@ if __name__ == '__main__':
     # sex = 1
     birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
     sex = 0
+    # birthday = dt(year = 1985, month = 5, day = 8, hour = 13, minute = 41)
+    # sex = 0
     # birthday = dt(year = 1984, month = 7, day = 17, hour = 18, minute = 25)
     # sex = 0
     # birthday = dt(year = 1983, month = 12, day = 28, hour = 4, minute = 35)

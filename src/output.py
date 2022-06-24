@@ -247,23 +247,25 @@ def output_stdio(meishiki, unsei):
         n_tsuhen = kd.tsuhen[nen[3]] # 年運の通変
         cont += ''.join([n_kan, n_shi]) + ' (' + n_tsuhen + ') | '
         if nen[4] != -1:
-            cont += '干合 '
+            cont += '干合, '
         if nen[5] != -1:
-            cont += '支合 '
+            cont += '支合, '
         if nen[6] != -1:
-            cont += kd.gogyo[kd.hogo[nen[6]][1]] + '方合 '
+            cont += kd.gogyo[kd.hogo[nen[6]][1]] + '方合, '
         if nen[7] != -1:
-            cont += '三合' + kd.gogyo[kd.sango[nen[7]][1]] + '局 '
+            cont += '三合' + kd.gogyo[kd.sango[nen[7]][1]] + '局, '
         if nen[8] != -1:
-            cont += kd.gogyo[kd.hankai[nen[8]][2]] + '半会 '
+            cont += kd.gogyo[kd.hankai[nen[8]][2]] + '半会, '
         if nen[9] != -1:
-            cont += '天戦地冲 '
+            cont += '天戦地冲, '
         if nen[10] != -1:
-            cont += '冲 '
+            cont += '冲, '
         if nen[11] != -1:
-            cont += '刑 '
+            cont += '刑, '
         if nen[12] != -1:
-            cont += '害 '
+            cont += '害'
+        else:
+            cont = cont[:len(cont) - 2]
         print(cont)
         # breakpoint()
         year += 1

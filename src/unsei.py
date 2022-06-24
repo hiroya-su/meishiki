@@ -117,15 +117,6 @@ def is_shigo_y(chishi, d_shi, shi):
     return -1    
     
     
-# def is_hogo(chishi_p):
-
-#     # 方合の有無を判定する
-#     for i, h in enumerate(kd.hogo):
-#         if (h[0][0] in chishi_p) and (h[0][1] in chishi_p) and (h[0][2] in chishi_p):
-#             return i
-#     return -1
-
-
 def is_hogo(chishi, shi):
     
     # 方合の有無を判定する
@@ -139,22 +130,18 @@ def is_hogo(chishi, shi):
 
 
 def is_hogo_y(chishi, d_shi, shi):
-
-    for i, hogo in enumerate(kd.hogo):
-        for c in chishi:
-            if (c in hogo) and (d_shi in hogo) and (shi in hogo):
-                return i
-    return -1
-
-
-# def is_sango(chishi_p):
-
-#     # 三合の有無を判定する
-#     for i, s in enumerate(kd.sango):
-#         if (s[0][0] in chishi_p) and (s[0][1] in chishi_p) and (s[0][2] in chishi_p):
-#             return i
-#     return -1
-
+    
+    for i, h in enumerate(kd.hogo):
+        hg = [j for j in h[0]]
+        if shi in hg:
+            hg.remove(shi)
+            if d_shi in hg:
+                hg.remove(d_shi)
+                for c in chishi:
+                    if c in hg:
+                        return i
+    return is_hogo(chishi, shi)
+    
 
 def is_sango(chishi, shi):
 
@@ -170,11 +157,16 @@ def is_sango(chishi, shi):
 
 def is_sango_y(chishi, d_shi, shi):
 
-    for i, sango in enumerate(kd.sango):
-        for c in chishi:
-            if (c in sango) and (d_shi in sango) and (shi in sango):
-                return i
-    return -1
+    for i, h in enumerate(kd.sango):
+        hg = [j for j in h[0]]
+        if shi in hg:
+            hg.remove(shi)
+            if d_shi in hg:
+                hg.remove(d_shi)
+                for c in chishi:
+                    if c in hg:
+                        return i
+    return is_sango(chishi, shi)
 
 
 def is_hankai(chishi, shi):
