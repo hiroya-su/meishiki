@@ -5,12 +5,12 @@ from datetime import datetime as dt
 
 if __name__ == '__main__':
 
-    # birthday = dt(year = 1978, month = 7, day = 18, hour = 14, minute = 47)
-    # sex = 1
+    birthday = dt(year = 1978, month = 7, day = 18, hour = 14, minute = 47)
+    sex = 1
     # birthday = dt(year = 1978, month = 11, day = 21, hour = 13, minute = 19)
     # sex = 1
-    birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
-    sex = 0
+    # birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
+    # sex = 0
     # birthday = dt(year = 1985, month = 5, day = 8, hour = 13, minute = 41)
     # sex = 0
     # birthday = dt(year = 1984, month = 7, day = 17, hour = 18, minute = 25)

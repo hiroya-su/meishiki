@@ -188,7 +188,7 @@ def is_hankai_y(chishi, d_shi, shi):
 
 def is_tensen_chichu(nisshi, tsuhen, shi):
     
-    if (nisshi == kd.hitsuchu_rev[shi]) and (tsuhen == 6):
+    if (shi == kd.hitsuchu_rev[nisshi]) and (tsuhen == 6):
         return 1
     return -1
     
