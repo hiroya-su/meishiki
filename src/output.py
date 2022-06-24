@@ -211,25 +211,27 @@ def output_stdio(meishiki, unsei):
             d_kan = kd.kan[daiun[d_idx][1]] # 大運の干
             d_shi = kd.shi[daiun[d_idx][2]] # 大運の支
             d_tsuhen = kd.tsuhen[daiun[d_idx][3]] # 大運の通変
-            cont = ''.join([d_kan, d_shi]) + ' (' + d_tsuhen + ')：'
+            cont = ''.join([d_kan, d_shi]) + ' (' + d_tsuhen + ')： '
             if daiun[d_idx][4] != -1:
-                cont += '干合 '
+                cont += '干合, '
             if daiun[d_idx][5] != -1:
-                cont += '支合 '
+                cont += '支合, '
             if daiun[d_idx][6] != -1:
-                cont += kd.gogyo[kd.hogo[daiun[d_idx][6]][1]] + '方合 '
+                cont += kd.gogyo[kd.hogo[daiun[d_idx][6]][1]] + '方合, '
             if daiun[d_idx][7] != -1:
-                cont += '三合' + kd.gogyo[kd.sango[daiun[d_idx][7]][1]] + '局 '
+                cont += '三合' + kd.gogyo[kd.sango[daiun[d_idx][7]][1]] + '局, '
             if daiun[d_idx][8] != -1:
-                cont += kd.gogyo[kd.hankai[daiun[d_idx][8]][2]] + '半会 '
+                cont += kd.gogyo[kd.hankai[daiun[d_idx][8]][2]] + '半会, '
             if daiun[d_idx][9] != -1:
-                cont += '天戦地冲 '
+                cont += '天戦地冲, '
             if daiun[d_idx][10] != -1:
-                cont += '冲 '
+                cont += '冲, '
             if daiun[d_idx][11] != -1:
-                cont += '刑 '
+                cont += '刑, '
             if daiun[d_idx][12] != -1:
-                cont += '害 '
+                cont += '害, '
+            else:
+                cont = cont[:len(cont) - 2]
             print(cont)
             print('======')
         
@@ -245,7 +247,7 @@ def output_stdio(meishiki, unsei):
         n_kan = kd.kan[nen[1]] # 年運の干
         n_shi = kd.shi[nen[2]] # 年運の支
         n_tsuhen = kd.tsuhen[nen[3]] # 年運の通変
-        cont += ''.join([n_kan, n_shi]) + ' (' + n_tsuhen + ') | '
+        cont += ''.join([n_kan, n_shi]) + ' (' + n_tsuhen + ') |  '
         if nen[4] != -1:
             cont += '干合, '
         if nen[5] != -1:

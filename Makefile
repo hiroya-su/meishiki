@@ -1,5 +1,5 @@
 all:
-	docker exec -it python3 python suimei.py
+	docker exec -it python3 python suimei.py $(BIRTH) $(SEX)
 build:
 	docker-compose build --no-cache
 install:

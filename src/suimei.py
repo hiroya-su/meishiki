@@ -2,26 +2,15 @@ from meishiki import build_meishiki
 from unsei import build_unsei
 from output import output_html, output_stdio
 from datetime import datetime as dt
+import sys
 
 if __name__ == '__main__':
 
-    birthday = dt(year = 1978, month = 7, day = 18, hour = 14, minute = 47)
-    sex = 1
-    # birthday = dt(year = 1978, month = 11, day = 21, hour = 13, minute = 19)
-    # sex = 1
-    # birthday = dt(year = 1978, month = 9, day = 26, hour = 13, minute = 51)
-    # sex = 0
-    # birthday = dt(year = 1985, month = 5, day = 8, hour = 13, minute = 41)
-    # sex = 0
-    # birthday = dt(year = 1984, month = 7, day = 17, hour = 18, minute = 25)
-    # sex = 0
-    # birthday = dt(year = 1983, month = 12, day = 28, hour = 4, minute = 35)
-    # sex = 1
-    # birthday = dt(year = 1951, month = 1, day = 8, hour = 0, minute = 50)
-    # sex = 1
-    # birthday = dt(year = 1952, month = 4, day = 13, hour = 0, minute = 40)
-    # sex = 1
-
+    b = sys.argv[1]
+    t = sys.argv[2]
+    birthday = dt.strptime(b + ' ' + t, '%Y-%m-%d %H:%M')
+    sex = int(sys.argv[3])
+    
     # 命式を組成する
     meishiki = build_meishiki(birthday, sex)
 
