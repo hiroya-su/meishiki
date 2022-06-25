@@ -194,6 +194,17 @@ def output_stdio(meishiki, unsei):
             k2 = kd.shi[g[1][0]]         # 支２
             print(b1 + 'の「' + k1 + '」と' + b2 + 'の「' + k2 + '」とが害')
 
+    print()
+
+    print('＜特記＞')
+    if not meishiki.youjin and not meishiki.kaigou:
+        print('特記なし')
+    else:
+        if meishiki.youjin:
+            print('陽刃')
+        if meishiki.kaigou:
+            print('魁罡')
+
     daiun = unsei.daiun
     nenun = unsei.nenun
 
