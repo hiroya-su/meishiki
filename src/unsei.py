@@ -244,6 +244,13 @@ def is_gai(chishi, shi):
             return i
     return -1
 
+
+def is_kansatsu(d_tsuhen, n_tsuhen):
+
+    if (d_tsuhen == 6 and n_tsuhen == 7) or (d_tsuhen == 7 and n_tsuhen == 6):
+        return 1
+    return -1
+
     
 def append_daiun(meishiki):
     
@@ -285,7 +292,7 @@ def append_daiun(meishiki):
             chu = -1
         kei = is_kei(meishiki.chishi, shi)  # 刑
         gai = is_gai(meishiki.chishi, shi)  # 害
-        
+
         daiun.append([ry, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc, chu, kei, gai])
         ry += 10
         idx += p
@@ -341,8 +348,10 @@ def append_nenun(meishiki, daiun):
                 chu = -1
             kei = is_kei_y(meishiki.chishi, d_shi, shi)  # 刑
             gai = is_gai_y(meishiki.chishi, d_shi, shi)  # 害
+
+            kansatsu = is_kansatsu(daiun[d_idx][3], tsuhen)  # 官殺混雑
             
-            nenun.append([n, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc, chu, kei, gai])
+            nenun.append([n, kan, shi, tsuhen, kango, shigo, hogo, sango, hankai, tc, chu, kei, gai, kansatsu])
             
         idx += 1
         if idx >= 60:

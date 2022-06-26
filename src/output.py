@@ -276,7 +276,9 @@ def output_stdio(meishiki, unsei):
         if nen[11] != -1:
             cont += '刑, '
         if nen[12] != -1:
-            cont += '害'
+            cont += '害, '
+        if nen[13] != -1:
+            cont += '官殺混雑'
         else:
             cont = cont[:len(cont) - 2]
         print(cont)
