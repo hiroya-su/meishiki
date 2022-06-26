@@ -485,6 +485,8 @@ def build_meishiki(birthday, sex):
     sango = append_sango(chishi)
     if not sango:
         hankai = append_hankai(chishi)
+    else:
+        hankai = []
     
     # 七冲・刑・害を得る
     hitsuchu = append_hitsuchu(chishi)

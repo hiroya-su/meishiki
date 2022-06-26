@@ -123,7 +123,7 @@ def output_stdio(meishiki, unsei):
         print('三合会局なし')
     else:
         sango = meishiki.sango
-        print(kd.shi[sango[0][0]] + ', ' + kd.shi[sango[0][1]] + ', ' + kd.shi[sango[0][2]] + 'の三合' + kd.gogyo[sango[1]]+ '局により、月支蔵干が' + kd.kan[sango[3]] + '（' + kd.tsuhen[sango[4]] + '）から' + kd.kan[sango[2]] + '（' + kd.tsuhen[sango[5]] +'）に変化する')
+        print(kd.shi[sango[0][0]] + ', ' + kd.shi[sango[0][1]] + ', ' + kd.shi[sango[0][2]] + 'の三合' + kd.gogyo[sango[1]]+ '局')
 
     print()
     
