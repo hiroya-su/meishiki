@@ -213,8 +213,10 @@ def output_stdio(meishiki, unsei):
     year = meishiki.birthday.year + ry
     
     for n, nen in enumerate(nenun):
-        
-        if (nen[0] != ry) and (nen[0] % 10 == ry):
+
+        if (ry == 10) and (nen[0] != ry) and (nen[0] % 10 == 0):
+            d_idx += 1
+        if (ry != 10) and (nen[0] != ry) and (nen[0] % 10 == ry):
             d_idx += 1
 
         if nen[0] == daiun[d_idx][0]:
