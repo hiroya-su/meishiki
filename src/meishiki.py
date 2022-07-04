@@ -36,7 +36,8 @@ class Meishiki:
     kei: list[int] = field(default_factory = list)
     gai: list[int] = field(default_factory = list)
     kubo: list[int] = field(default_factory = list)
-
+    choko: str = ''
+    
     youjin: int = 0
     kaigou: int = 0
 
@@ -411,6 +412,11 @@ def append_kubo(birthday, chishi):
     return k
 
 
+def append_choko(birthday, d_kan):
+
+    return kd.choko[d_kan][birthday.month - 1]
+    
+
 def append_youjin(d_kan, d_shi):
 
     if d_kan == 2 and d_shi == 6:    # 丙午
@@ -496,6 +502,9 @@ def build_meishiki(birthday, sex):
     # 空亡を得る
     kubo = append_kubo(birthday, chishi)
 
+    # 調候を得る
+    choko = append_choko(birthday, d_kan)
+    
     # 陽刃・魁罡を得る
     youjin = append_youjin(d_kan, d_shi)
     kaigou = append_kaigou(d_kan, d_shi)
@@ -507,7 +516,7 @@ def build_meishiki(birthday, sex):
                         gogyo, inyo, getsurei,
                         tsuhen, twelve_fortune,
                         kango, shigo, hogo, sango, hankai,
-                        hitsuchu, kei, gai, kubo,
+                        hitsuchu, kei, gai, kubo, choko, 
                         youjin, kaigou)
     return meishiki
     
