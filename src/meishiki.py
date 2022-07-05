@@ -404,12 +404,13 @@ def append_kubo(birthday, chishi):
     except:
         print('空亡が計算できませんでした。')
         exit()
+    return kubo
     
-    k = []
-    for i, c in enumerate(chishi):
-        if c in kubo:
-            k.append([c, i])
-    return k
+    # k = []
+    # for i, c in enumerate(chishi):
+    #     if c in kubo:
+    #         k.append([c, i])
+    # return k
 
 
 def append_choko(birthday, d_kan):

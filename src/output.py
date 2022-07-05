@@ -5,7 +5,7 @@ from datetime import datetime as dt
 def output_html(meishiki, unsei):
     
     env = Environment(loader = FileSystemLoader('html/'))
-    template = env.get_template('template.html')
+    template = env.get_template('template2.html')
     
     wareki = kd.convert_to_wareki(meishiki.birthday)
     birthday_str = meishiki.birthday.strftime(f'{wareki}%-m月%-d日 %-H時%-M分生')
@@ -18,7 +18,9 @@ def output_html(meishiki, unsei):
                'tenkan1': kd.kan[meishiki.tenkan[0]], 'chishi1': kd.shi[meishiki.chishi[0]], 'zokan1': kd.kan[meishiki.zokan[0]], 'fortune1': kd.twelve_fortune[meishiki.twelve_fortune[0]], 'tsuhen_tenkan1': kd.tsuhen[meishiki.tsuhen[0]], 'tsuhen_zokan1': kd.tsuhen[meishiki.tsuhen[4]],
                'tenkan2': kd.kan[meishiki.tenkan[1]], 'chishi2': kd.shi[meishiki.chishi[1]], 'zokan2': kd.kan[meishiki.zokan[1]], 'fortune2': kd.twelve_fortune[meishiki.twelve_fortune[1]], 'tsuhen_tenkan2': kd.tsuhen[meishiki.tsuhen[1]], 'tsuhen_zokan2': kd.tsuhen[meishiki.tsuhen[5]],
                'tenkan3': kd.kan[meishiki.tenkan[2]], 'chishi3': kd.shi[meishiki.chishi[2]], 'zokan3': kd.kan[meishiki.zokan[2]], 'fortune3': kd.twelve_fortune[meishiki.twelve_fortune[2]], 'tsuhen_tenkan3': kd.tsuhen[meishiki.tsuhen[2]], 'tsuhen_zokan3': kd.tsuhen[meishiki.tsuhen[6]],
-               'tenkan4': kd.kan[meishiki.tenkan[3]], 'chishi4': kd.shi[meishiki.chishi[3]], 'zokan4': kd.kan[meishiki.zokan[3]], 'fortune4': kd.twelve_fortune[meishiki.twelve_fortune[3]], 'tsuhen_tenkan4': kd.tsuhen[meishiki.tsuhen[3]], 'tsuhen_zokan4': kd.tsuhen[meishiki.tsuhen[7]],}
+               'tenkan4': kd.kan[meishiki.tenkan[3]], 'chishi4': kd.shi[meishiki.chishi[3]], 'zokan4': kd.kan[meishiki.zokan[3]], 'fortune4': kd.twelve_fortune[meishiki.twelve_fortune[3]], 'tsuhen_tenkan4': kd.tsuhen[meishiki.tsuhen[3]], 'tsuhen_zokan4': kd.tsuhen[meishiki.tsuhen[7]],
+               'choko': meishiki.choko, 'kubo': kd.shi[meishiki.kubo[0]] + kd.shi[meishiki.kubo[1]],
+               'moku': meishiki.gogyo[0], 'ka': meishiki.gogyo[1], 'do': meishiki.gogyo[2], 'gon': meishiki.gogyo[3], 'sui': meishiki.gogyo[4]}
     
     p1 = '&nbsp;' + str(daiun[0][0]) if len(str(daiun[0][0])) == 1 else str(daiun[0][0])
     d_nen = {'p1': p1, 'p2': daiun[1][0], 'p3': daiun[2][0], 'p4': daiun[3][0], 'p5': daiun[4][0], 'p6': daiun[5][0], 'p7': daiun[6][0], 'p8': daiun[7][0], 'p9': daiun[8][0], 'p10': daiun[9][0], 'p11': daiun[10][0],
@@ -147,13 +149,7 @@ def output_stdio(meishiki, unsei):
     print()
     
     print('＜空亡＞')
-    if not meishiki.kubo:
-        print('空亡なし')
-    else:
-        for k in meishiki.kubo:
-            b1 = kd.shigo_chu[k[1]]
-            k1 = kd.shi[k[0]]
-            print(b1 + 'の「' + k1 + '」が空亡')
+    print(kd.shi[meishiki.kubo[0]] + kd.shi[meishiki.kubo[1]])
 
     print()
     
