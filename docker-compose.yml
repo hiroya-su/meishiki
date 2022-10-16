@@ -1,8 +1,8 @@
 version: '3'
 services:
-  python3:
+  meishiki:
     build: .
-    container_name: 'python3'
+    container_name: 'meishiki'
     tty: true
     volumes:
       - ./src:/root/src

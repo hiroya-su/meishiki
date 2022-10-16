@@ -5,6 +5,8 @@ __pycache__/
 <<<<<<< HEAD
 setsuiri/
 .DS_Store
+src/html/1*.html
+src/html/2*.html
 =======
 >>>>>>> origin/master
 
