@@ -1,0 +1,1 @@
+from .meishiki import Meishiki
